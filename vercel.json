@@ -2,11 +2,27 @@
   "version": 2,
   "builds": [
     {
+      "src": "sitemap.xml",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "robots.txt",
+      "use": "@vercel/static"
+    },
+    {
       "src": "website.html",
       "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/sitemap.xml",
+      "dest": "sitemap.xml"
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "robots.txt"
+    },
     {
       "src": "/.*",
       "dest": "website.html"

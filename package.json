@@ -1,6 +1,13 @@
 {
-  "type": "module",
+  "name": "daily_face_rate",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node /static/index.js",
+    "build": ""
+  },
   "dependencies": {
+    "express": "^4.19.2",
     "node-postgres": "^0.6.2",
     "vercel": "^36.0.0"
   }

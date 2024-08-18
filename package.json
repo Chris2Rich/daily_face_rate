@@ -1,0 +1,7 @@
+{
+  "type": "module",
+  "dependencies": {
+    "node-postgres": "^0.6.2",
+    "vercel": "^36.0.0"
+  }
+}

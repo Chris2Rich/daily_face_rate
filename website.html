@@ -27,6 +27,7 @@
         user-select: none;
         scrollbar-width: thin;
         scrollbar-color: #ceebde #3d524b;
+        transition-duration: 350ms;
       }
 
       .centered {
@@ -87,19 +88,27 @@
         }
       }
 
+      .oov {
+        opacity: 0;
+        transform: translate(0px, 15px)
+      }
+
     </style>
   </head>
 
   <body style="display: flex; flex-direction: column;">
-    <div style="position: fixed; top: 0px; left: 0px; background-image: radial-gradient(circle at bottom, #273d2c, #172727); background-size: cover; background-repeat: no-repeat; width: 100vw; height: 100vh; z-index: -1;"></div>
-    <h1 class="centered" style="flex: 0.5; margin-top: 2rem; font-size: 2rem">Just an app to rate randoms</h1>
-    <img id="pic" class="centered" src="https://picsum.photos/100" style="object-fit: contain; width: 80vw; height: 80vh; min-width: 80vw; min-height: 80vh; max-width: 800px; max-height: 800px; flex: 8; border-radius: 17.5px; margin-top: 2rem; border: #3d524b 7.5px solid; box-shadow: 7.5px 7.5px 15px #000;" alt="you have to see the image!">
-    <div class="centered" style="flex: 1; display: flex; flex-direction: row; width: 80%; max-width: 800px;">
+    <div style="position: fixed; top: 0px; left: 0px; background-image: radial-gradient(circle at bottom, #273d2c, #172727); background-size: cover; background-repeat: no-repeat; width: 100vw; height: 100vh; z-index: -1; transition-duration: 0ms;"></div>
+    <h1 class="centered" style="margin-top: 2rem; font-size: 2rem">Just a site to rate randoms</h1>
+    <img id="pic" data-image-id="0" class="centered" src="https://picsum.photos/100" style="object-fit:cover; aspect-ratio: 1/1; width: 80vw; height: 80vh; min-width: 80vw; min-height: 80vh; max-width: 800px; max-height: 800px; border-radius: 17.5px; margin-top: 2rem; border: #3d524b 7.5px solid; box-shadow: 7.5px 7.5px 15px #000;" alt="you have to see the image!">
+    <div class="centered" style="display: flex; flex-direction: row; width: 80%; max-width: 800px;">
       <div style="flex: 8; margin-right: 0.5rem; margin-top: 1rem;">
         <label id="rating" for="score" class="centered" style="font-size: 1rem">Rating: 5</label>
         <input id="slider" name="score" type="range" min="0" max="20" value="10" class="slider">
       </div>
-      <button style="flex: 2; font-size: 1.25rem; margin-left: 0.5rem; margin-top: 1rem; box-shadow: 3.5px 3.5px 10px #000;">Rate</button>
+      <button onmousedown="do_rating_stuff()" style="flex: 2; font-size: 1.25rem; margin-left: 0.5rem; margin-top: 1rem; box-shadow: 3.5px 3.5px 10px #000;">
+        <p style="margin: 0px;">Rate</p>
+        <img id="button_load" src="https://icongr.am/material/loading.svg?size=32&color=ceebde" class="oov" style="position: absolute; left: calc(50% - 16px); top: calc(50% - 16px);">
+      </button>
     </div>
     <p class="centered" style="margin-top: 2rem;">
       Email: cz07business@gmail.com<br>
@@ -118,6 +127,46 @@
         if(!rating.innerHTML.includes(".")){
           rating.innerHTML += ".0"
         }
+      }
+
+      const spinner = document.querySelector('#button_load');
+      let rotation = 0
+
+      function animate() {
+        rotation += 2.5
+        spinner.style.transform = `rotate(${rotation}deg)`
+        requestAnimationFrame(animate)
+      }
+
+      animate()
+
+      async function do_rating_stuff(){
+        const data = {
+          id: document.querySelector("#pic").getAttribute("data-image-id"),
+          rating: (slider.value / 2),
+        }
+
+        const target_url = window.location + `/api/rate/${data.id}/${data.rating}/`
+
+        document.querySelector("#button_load").classList.remove("oov")
+        document.querySelector("button").querySelector("p").classList.add("oov")
+
+        const result = await fetch(target_url)
+        console.log(result)
+        
+        //show average rating
+
+        await setTimeout(()=>{
+          slider.value = 10
+          slider.dispatchEvent(new Event("input"))
+
+          document.querySelector("#button_load").classList.add("oov")
+          document.querySelector("button").querySelector("p").classList.remove("oov")
+        }, 0)
+
+        //change image src to new src
+
+        
       }
     </script>
     <noscript>

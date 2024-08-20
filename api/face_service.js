@@ -22,7 +22,7 @@ const config_get = {
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Request-Headers': '*',
-    'api-key': 'cmuCsQRYeNVmJEs1JrvWFPES1ewgP8Q6ikgQM2KxKvheQhjqm6J2DJplEgzJtxBO',
+    'api-key': process.env.mongokey,
   },
   data: data_get
 }
@@ -33,7 +33,7 @@ const config_post = {
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Request-Headers': '*',
-    'api-key': 'cmuCsQRYeNVmJEs1JrvWFPES1ewgP8Q6ikgQM2KxKvheQhjqm6J2DJplEgzJtxBO',
+    'api-key': process.env.mongokey,
   },
   data: data_post
 }

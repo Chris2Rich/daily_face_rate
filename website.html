@@ -133,9 +133,9 @@
 
       function get_date(date){
         const o = new Date()
-        const d = o.getUTCDay
-        const m = o.getUTCHours
-        const y = o.getUTCFullYear
+        const d = o.getUTCDay()
+        const m = o.getUTCHours()
+        const y = o.getUTCFullYear()
 
         return [d,m,y].toString()
       }

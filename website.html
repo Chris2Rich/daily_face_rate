@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="description" content="A new website for rating people's attractiveness">
-    <meta name="keywords" content="looks, attractiveness, attractive, people, face, rate, rating, app, new">
+    <meta name="keywords" content="looks, attractiveness, attractive, people, face, rate, randoms, rating, app, new">
     <meta name="color-scheme" content="dark">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="maximum-scale" content="1.5">
@@ -167,9 +167,6 @@
           const new_avg = ((Number(data["r"]) * Number(data["n"])) + (Number(slider.value) / 2)) / (Number(data["n"]) + 1)
           console.log(new_avg, data["r"], data["n"], (Number(slider.value) / 2))
           document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(new_avg * 100) / 100
-          // setTimeout(()=> {
-          //   document.querySelector("#title").innerHTML = "Just a site to rate randoms"
-          // }, 3000)
           document.querySelector("#interaction").classList.add("oov")
           setTimeout(()=>{
             document.querySelector("#interaction").style.visibility = "hidden"

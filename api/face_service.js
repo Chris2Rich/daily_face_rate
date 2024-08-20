@@ -69,7 +69,6 @@ function parse_url(s){
 }
 
 module.exports = async (req, res) => {
-  console.log(process.env)
   if(daily_data == null){
     await get_data()
   }
@@ -93,7 +92,6 @@ module.exports = async (req, res) => {
       await post_data()
 
       res.status(200).json(daily_data)
-      console.log(daily_data, url_data[2])
       break
     case "face":
       res.status(200).json(daily_data)

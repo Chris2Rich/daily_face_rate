@@ -140,7 +140,7 @@
         return [d,m,y].toString()
       }
 
-      if(localStorage.getItem(get_date()) == true){
+      if(localStorage.getItem(get_date()) == "true"){
         document.querySelector("#interaction").style.visibility = "hidden"
         document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(data["r"] * 100) / 100
       }

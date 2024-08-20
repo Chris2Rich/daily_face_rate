@@ -140,9 +140,8 @@
         return [d,m,y].toString()
       }
 
-      if(localStorage.getItem(get_date()) == "true"){
+      if(localStorage.getItem(get_date())){
         document.querySelector("#interaction").style.visibility = "hidden"
-        document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(data["r"] * 100) / 100
       }
 
       const spinner = document.querySelector('#button_load');
@@ -164,7 +163,7 @@
         
         //show average rating
         if(method == "rate"){
-          localStorage.setItem(get_date(), true)
+          localStorage.setItem(get_date(), data["i"])
           const new_avg = ((Number(data["r"]) * Number(data["n"])) + (Number(slider.value) / 2)) / (Number(data["n"]) + 1)
           console.log(new_avg, data["r"], data["n"], (Number(slider.value) / 2))
           document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(new_avg * 100) / 100
@@ -196,7 +195,11 @@
         }, 0)
 
         if(method == "face"){
-          document.querySelector("img").src = result["i"]
+          if(localStorage.getItem(get_date())){
+            document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(data["r"] * 100) / 100
+          }
+
+          document.querySelector("img").src = data["i"]
         }
       }
 

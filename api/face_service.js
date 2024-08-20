@@ -69,6 +69,7 @@ function parse_url(s){
 }
 
 module.exports = async (req, res) => {
+  console.log(process.env)
   if(daily_data == null){
     await get_data()
   }

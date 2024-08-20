@@ -18,22 +18,22 @@ let data_post = null
 
 const config_get = {
   method: 'post',
-  url: 'https://eu-west-2.aws.data.mongodb-api.com/app/data-yiwnmcn/endpoint/data/v1/action/aggregate',
+  url: process.env.DATA_API_URL + '/action/aggregate',
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Request-Headers': '*',
-    'api-key': process.env.mongokey,
+    'api-key': process.env.DATA_API_KEY,
   },
   data: data_get
 }
 
 const config_post = {
   method: 'post',
-  url: 'https://eu-west-2.aws.data.mongodb-api.com/app/data-yiwnmcn/endpoint/data/v1/action/updateOne',
+  url: process.env.DATA_API_URL + '/action/updateOne',
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Request-Headers': '*',
-    'api-key': process.env.mongokey,
+    'api-key': process.env.DATA_API_KEY,
   },
   data: data_post
 }

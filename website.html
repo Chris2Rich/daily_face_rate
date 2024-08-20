@@ -98,26 +98,28 @@
 
   <body style="display: flex; flex-direction: column;">
     <div style="position: fixed; top: 0px; left: 0px; background-image: radial-gradient(circle at bottom, #273d2c, #172727); background-size: cover; background-repeat: no-repeat; width: 100vw; height: 100vh; z-index: -1; transition-duration: 0ms;"></div>
-    <h1 class="centered" style="margin-top: 2rem; font-size: 2rem">Just a site to rate randoms</h1>
+    <h1 id="title" class="centered" style="margin-top: 2rem; font-size: 2rem">Just a site to rate randoms</h1>
     <img id="pic" data-image-id="0" class="centered" src="https://picsum.photos/100" style="object-fit:cover; aspect-ratio: 1/1; width: 80vw; height: 80vh; min-width: 80vw; min-height: 80vh; max-width: 800px; max-height: 800px; border-radius: 17.5px; margin-top: 2rem; border: #3d524b 7.5px solid; box-shadow: 7.5px 7.5px 15px #000;" alt="you have to see the image!">
-    <div class="centered" style="display: flex; flex-direction: row; width: 80%; max-width: 800px;">
+    <div id="interaction" class="centered" style="display: flex; flex-direction: row; width: 80%; max-width: 800px;">
       <div style="flex: 8; margin-right: 0.5rem; margin-top: 1rem;">
         <label id="rating" for="score" class="centered" style="font-size: 1rem">Rating: 5</label>
         <input id="slider" name="score" type="range" min="0" max="20" value="10" class="slider">
       </div>
-      <button onmousedown="do_rating_stuff()" style="flex: 2; font-size: 1.25rem; margin-left: 0.5rem; margin-top: 1rem; box-shadow: 3.5px 3.5px 10px #000;">
+      <button onmousedown="do_rating_stuff('rate')" style="flex: 2; font-size: 1.25rem; margin-left: 0.5rem; margin-top: 1rem; box-shadow: 3.5px 3.5px 10px #000;">
         <p style="margin: 0px;">Rate</p>
         <img id="button_load" src="https://icongr.am/material/loading.svg?size=32&color=ceebde" class="oov" style="position: absolute; left: calc(50% - 16px); top: calc(50% - 16px);">
       </button>
     </div>
     <p class="centered" style="margin-top: 2rem;">
-      Email: cz07business@gmail.com<br>
+      Contact the owner to have pictures of people added ️‍🔥<br><br>
+      Email: raterandoms@gmail.com<br>
       Instagram: <a href="https://instagram.com/ceo_ztech">Link</a><br>
       TikTok: <a href="https://tiktok.com/@ceo_ztech">Link</a><br>
       Twitter <a href="https://x.com/c2r_dev">Link</a><br>
     </p>
     <footer class="centered" style="margin-top: 2rem; margin-bottom: 2rem;">&copy 2024 -  All rights reserved Zacaria Technologies</footer>
     <script>
+      let data = null
       const slider = document.querySelector("#slider")
       const rating = document.querySelector("#rating")
       rating.innerHTML = "Rating: " + (slider.value / 2)
@@ -127,6 +129,20 @@
         if(!rating.innerHTML.includes(".")){
           rating.innerHTML += ".0"
         }
+      }
+
+      function get_date(date){
+        const o = new Date()
+        const d = o.getUTCDay
+        const m = o.getUTCHours
+        const y = o.getUTCFullYear
+
+        return [d,m,y].toString()
+      }
+
+      if(localStorage.getItem(get_date()) == true){
+        document.querySelector("#interaction").style.visibility = "hidden"
+        document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(data["r"] * 100) / 100
       }
 
       const spinner = document.querySelector('#button_load');
@@ -140,23 +156,38 @@
 
       animate()
 
-      async function do_rating_stuff(){
-        const data = {
-          id: document.querySelector("#pic").getAttribute("data-image-id"),
-          rating: (slider.value / 2),
-        }
-
-        const target_url = window.location + `/api/rate/${data.id}/${data.rating}/`
-
+      async function do_rating_stuff(method){
+        const target_url = window.location + `/api/${method}/${document.querySelector("#pic").getAttribute("data-image-id")}/${(slider.value / 2)}/`
+        
         document.querySelector("#button_load").classList.remove("oov")
         document.querySelector("button").querySelector("p").classList.add("oov")
-
-        const result = await fetch(target_url)
-        console.log(result)
         
         //show average rating
+        if(method == "rate"){
+          localStorage.setItem(get_date(), true)
+          const new_avg = ((Number(data["r"]) * Number(data["n"])) + (Number(slider.value) / 2)) / (Number(data["n"]) + 1)
+          console.log(new_avg, data["r"], data["n"], (Number(slider.value) / 2))
+          document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(new_avg * 100) / 100
+          // setTimeout(()=> {
+          //   document.querySelector("#title").innerHTML = "Just a site to rate randoms"
+          // }, 3000)
+          document.querySelector("#interaction").classList.add("oov")
+          setTimeout(()=>{
+            document.querySelector("#interaction").style.visibility = "hidden"
+          }, 350)
+        }
 
-        await setTimeout(()=>{
+        const response = await fetch(target_url)
+        let result = null
+
+        for await (const chunk of response.body){
+          result = new TextDecoder().decode(chunk)
+        }
+
+        result = JSON.parse(result)
+        data = result
+
+        setTimeout(()=>{
           slider.value = 10
           slider.dispatchEvent(new Event("input"))
 
@@ -164,10 +195,12 @@
           document.querySelector("button").querySelector("p").classList.remove("oov")
         }, 0)
 
-        //change image src to new src
-
-        
+        if(method == "face"){
+          document.querySelector("img").src = result["i"]
+        }
       }
+
+      do_rating_stuff("face")
     </script>
     <noscript>
       <h1 style="font: #F00">TURN ON JAVASCRIPT!</h1>

@@ -134,7 +134,7 @@
     <div style="position: fixed; top: 0px; left: 0px; background-image: radial-gradient(circle at bottom, #273d2c, #172727); background-size: cover; background-repeat: no-repeat; width: 100vw; height: 100vh; z-index: -1; transition-duration: 0ms;"></div>
     <h1 id="title" class="centered" style="margin-top: 2rem; font-size: 2rem">Just a site to rate randoms</h1>
     
-    <img id="pic" data-image-id="0" class="centered" src="" style="object-fit:cover; aspect-ratio: 1/1; width: 80vw; height: 80vh; min-width: 80vw; min-height: 80vh; max-width: 800px; max-height: 800px; border-radius: 17.5px; margin-top: 2rem; border: #3d524b 7.5px solid; box-shadow: 7.5px 7.5px 15px #000;" alt="you have to see the image!">
+    <img id="pic" data-image-id="0" class="centered" src="" style="object-fit:contain; aspect-ratio: 1/1; width: 80vw; height: 80vh; max-width: 800px; max-height: 800px; border-radius: 17.5px; margin-top: 2rem; border: #3d524b 7.5px solid; box-shadow: 7.5px 7.5px 15px #000;" alt="you have to see the image!">
     
     <div style="height: 1rem; margin: 1.5rem;">
     <img src="https://icongr.am/material/chevron-double-left.svg?size=50&color=ceebde" class="left-arrow" onclick="shift('-')" >
@@ -189,10 +189,10 @@
       function shift(dir){
         switch(dir){
           case("+"):
-          ptr++
+          ptr += 1
           break
           case("-"):
-          ptr--
+          ptr -= 1
           break
           default:
             return
@@ -252,10 +252,15 @@
         }
 
         const response = await fetch(target_url)
-        let result = null
+        const reader = response.body.getReader()
+        let result = ""
 
-        for await (const chunk of response.body){
-          result = new TextDecoder().decode(chunk)
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            break;
+          }
+          result += new TextDecoder().decode(value);
         }
 
         result = JSON.parse(result)

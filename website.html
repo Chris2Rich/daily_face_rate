@@ -205,6 +205,8 @@
           ptr = data.length - 1
         }
 
+        document.querySelector("#imd").setAttribute("data-image-id", ptr)
+
         if(localStorage.getItem(get_date(ptr))){
           document.querySelector("#interaction").classList.add("oov")
           document.querySelector("#interaction").style.visibility = "hidden"

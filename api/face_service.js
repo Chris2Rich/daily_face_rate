@@ -83,8 +83,8 @@ module.exports = async (req, res) => {
         "filter": { "_id": { "$oid": "66c388c15108060f7786c50c" } },
         "update": {
           "$set": {
-          [`data.${day}.r`]: ((daily_data["r"] * daily_data["n"]) + Number(url_data[2])) / (daily_data["n"] + 1),
-          [`data.${day}.n`]: (daily_data["n"] + 1)
+          [`data.${day}.${url_data[1]}.r`]: ((daily_data[url_data[1]]["r"] * daily_data[url_data[1]]["n"]) + Number(url_data[2])) / (daily_data[url_data[1]]["n"] + 1),
+          [`data.${day}.${url_data[1]}.n`]: (daily_data[url_data[1]]["n"] + 1)
           }
         }
       })})

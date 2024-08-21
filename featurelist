@@ -1,11 +1,13 @@
 ===> 1. multiple faces per day (5)
-2. make images have correct border
-3. daily tokens to rate most attractive of group
-4. deduping requests (session cache)
-5. leaderboard
-6. infinite faces
-7. filtering
-8. ads
-9. accounts
-10. custom uploads
-11. comments
+===> 1. send user to next on rate
+===> 1. make images have correct border
+
+1. infinite faces
+2. leaderboard
+3. deduping requests (session cache)
+4. daily tokens to rate most attractive of group
+5. filtering
+6. ads
+7. accounts
+8. custom uploads
+9. comments

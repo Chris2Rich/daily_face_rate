@@ -232,7 +232,7 @@
 
       animate()
 
-      if(JSON.parse(localStorage.getItem(get_date(ptr)))[ptr]["rating"]){
+      if(localStorage.getItem(get_date(ptr))){
         document.querySelector("#interaction").style.visibility = "hidden"
       }
 
@@ -270,7 +270,7 @@
         }, 0)
 
         if(method == "face"){
-          if(JSON.parse(localStorage.getItem(get_date(ptr)))[ptr]["rating"]){
+          if(localStorage.getItem(get_date(ptr))){
             document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(data[ptr]["r"] * 100) / 100
           }
 

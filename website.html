@@ -209,7 +209,7 @@
           document.querySelector("#interaction").classList.add("oov")
           document.querySelector("#interaction").style.visibility = "hidden"
 
-          document.querySelector("#title").innerHTML = "Average Rating: " + Math.round((localStorage.getItem(get_date(ptr))["rating"]) * 100) / 100
+          document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(JSON.parse((localStorage.getItem(get_date(ptr))))["rating"]  * 100) / 100
           document.querySelector("img").src = data[ptr]["i"]
         } else {
           document.querySelector("#interaction").classList.remove("oov")

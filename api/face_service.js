@@ -90,6 +90,8 @@ module.exports = async (req, res) => {
       })})
 
       await post_data()
+      
+      console.log(url_data, daily_data)
 
       res.status(200).json(daily_data)
       break

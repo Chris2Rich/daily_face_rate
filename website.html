@@ -138,6 +138,7 @@
     
     <div style="height: 1rem; margin: 1.5rem;">
     <img src="https://icongr.am/material/chevron-double-left.svg?size=50&color=ceebde" class="left-arrow" onclick="shift('-')" >
+    <p id="position" class="centered" style="margin-top: 5px;">0/0</p>
     <img src="https://icongr.am/material/chevron-double-right.svg?size=50&color=ceebde" class="right-arrow" onclick="shift('+')">
     </div>
     
@@ -206,6 +207,7 @@
         }
 
         document.querySelector("img").setAttribute("data-image-id", ptr)
+        document.querySelector("#position").innerHTML = (ptr + 1).toString() + "/" + data.length
 
         if(localStorage.getItem(get_date(ptr))){
           document.querySelector("#interaction").classList.add("oov")
@@ -290,7 +292,10 @@
         }
       }
 
-      do_rating_stuff("face")
+      do_rating_stuff("face").then(()=>{
+        document.querySelector("#position").innerHTML = (ptr + 1).toString() + "/" + data.length
+      })
+      
     </script>
     <noscript>
       <h1 style="font: #F00">TURN ON JAVASCRIPT!</h1>

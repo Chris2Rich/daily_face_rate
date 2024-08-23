@@ -156,20 +156,20 @@
   </head>
 
   <body style="display: flex; flex-direction: column;">
+    <noscript>
+      <h1 style="font: #F00">TURN ON JAVASCRIPT!</h1>
+    </noscript>
     
     <div style="position: fixed; top: 0px; left: 0px; background-image: radial-gradient(circle at bottom, #273d2c, #172727); background-size: cover; background-repeat: no-repeat; width: 100vw; height: 100vh; z-index: -1; transition-duration: 0ms;"></div>
-    <h1 class="centered" style="margin-top: 4rem; font-size: 4rem;">Site is DOWN for maintenance</h1>
-  </body>  
-    <!-- 
     <h1 id="title" class="centered" style="margin-top: 2rem; font-size: 2rem">Just a site to rate randoms</h1>
     
     <img id="pic" data-image-id="0" class="centered" src="" style="object-fit:cover; height: 70vh; max-width: 80vw; max-height: 800px; border-radius: 15px; margin-top: 2rem; border: #3d524b 5px solid; box-shadow: 7.5px 7.5px 15px #000;" alt="you have to see the image!">
     
     <div style="height: 1rem; margin: 1.5rem;">
-    <img src="https://icongr.am/material/chevron-double-left.svg?size=50&color=ceebde" class="left-arrow" onclick="shift('-')" alt="click to go left">
+    <img src="https://icongr.am/material/chevron-double-left.svg?size=50&color=ceebde" class="left-arrow" onclick="shift('-')" alt="click to go left" title="Shift left">
     <p id="position" class="centered" style="margin-top: 5px;">0/0</p>
-    <img src="https://icongr.am/material/chevron-double-right.svg?size=50&color=ceebde" class="right-arrow" onclick="shift('+')" alt="click to go right">
-    <img src="https://icongr.am/material/filter-menu.svg?size=50&color=ceebde" class="filter-button" onclick="show_filter()" alt="click to open filters">
+    <img src="https://icongr.am/material/chevron-double-right.svg?size=50&color=ceebde" class="right-arrow" onclick="shift('+')" alt="click to go right" title="Shift right">
+    <img src="https://icongr.am/material/filter-menu.svg?size=50&color=ceebde" class="filter-button" onclick="show_filter()" alt="click to open filters" title="Click to open filters">
     </div>
     
     <div id="interaction" class="centered" style="display: flex; flex-direction: row; width: 80%; max-width: 800px;">
@@ -193,7 +193,7 @@
     </p>
     
     <div id="filter" class="filter oov">
-      <img src="https://icongr.am/material/close.svg?size=50&color=ceebde" class="filter-button" style="top: 2rem; right: 2rem; left: unset;" onclick="show_filter()" alt="click to close filters">
+      <img src="https://icongr.am/material/close.svg?size=50&color=ceebde" class="filter-button" style="top: 2rem; right: 2rem; left: unset;" onclick="show_filter()" alt="click to close" title="Click to close">
       <h1 class="centered" style="margin-top: 2rem; font-size: 2rem; text-decoration: underline;">Filters</h1>
 
       <div id="filter-list" class="centered" style="margin-top: 1rem; margin-bottom: 1rem;">
@@ -201,17 +201,18 @@
         <li><label for="item1">Men<input type="checkbox" onchange="filters[0][0][0] = this.checked; image_filter()"></label></li>
         <li><label for="item1">Women<input type="checkbox" onchange="filters[0][1][0] = this.checked; image_filter();"></label></li>
         <h1 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.25rem;">Race</h1>
-        <li><label for="item1">Black<input type="checkbox" onchange="filters[1][2][0] = this.checked; image_filter()"></label></li>
-        <li><label for="item1">Latino/a<input type="checkbox" onchange="filters[1][3][0] = this.checked; image_filter()"></label></li>
-        <li><label for="item1">White<input type="checkbox" onchange="filters[1][4][0] = this.checked; image_filter()"></label></li>
-        <li><label for="item1">Mixed<input type="checkbox" onchange="filters[1][5][0] = this.checked; image_filter()"></label></li>
+        <li><label for="item1">Black<input type="checkbox" onchange="filters[1][0][0] = this.checked; image_filter()"></label></li>
+        <li><label for="item1">Latino/a<input type="checkbox" onchange="filters[1][1][0] = this.checked; image_filter()"></label></li>
+        <li><label for="item1">Asian<input type="checkbox" onchange="filters[1][2][0] = this.checked; image_filter()"></label></li>
+        <li><label for="item1">White<input type="checkbox" onchange="filters[1][3][0] = this.checked; image_filter()"></label></li>
+        <li><label for="item1">Mixed<input type="checkbox" onchange="filters[1][4][0] = this.checked; image_filter()"></label></li>
       </div>
     </div>
     <footer class="centered" style="margin-top: 2rem; margin-bottom: 2rem;">&copy 2024 -  All rights reserved Zacaria Technologies</footer>
     
     <script>
       let data = null
-      let view = []
+      let view = [0]
       let ptr = 0
       const slider = document.querySelector("#slider")
       const rating = document.querySelector("#rating")
@@ -245,27 +246,27 @@
             return
         }
 
-        if(ptr >= data.length){
+        if(ptr >= view.length){
           ptr = 0
         }
         if(ptr < 0){
-          ptr = data.length - 1
+          ptr = view.length - 1
         }
 
         document.querySelector("img").setAttribute("data-image-id", ptr)
-        document.querySelector("#position").innerHTML = (ptr + 1).toString() + "/" + data.length
+        document.querySelector("#position").innerHTML = (ptr + 1).toString() + "/" + view.length
 
         if(localStorage.getItem(get_date(ptr))){
           document.querySelector("#interaction").classList.add("oov")
           document.querySelector("#interaction").style.visibility = "hidden"
 
-          document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(data[ptr]["r"]  * 100) / 100
-          document.querySelector("img").src = data[ptr]["i"]
+          document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(data[view[ptr]]["r"]  * 100) / 100
+          document.querySelector("img").src = data[view[ptr]]["i"]
         } else {
           document.querySelector("#interaction").classList.remove("oov")
           document.querySelector("#interaction").style.visibility = "visible"
           document.querySelector("#title").innerHTML = "Just a site to rate randoms"
-          document.querySelector("img").src = data[ptr]["i"]
+          document.querySelector("img").src = data[view[ptr]]["i"]
         }
 
         return
@@ -293,9 +294,9 @@
         document.querySelector("button").querySelector("p").classList.add("oov")
         
         if(method == "rate"){
-          const new_avg = ((Number(data[ptr]["r"]) * Number(data[ptr]["n"])) + (Number(slider.value) / 2)) / (Number(data[ptr]["n"]) + 1)
-          Object.assign(data[ptr], {rating : new_avg})
-          localStorage.setItem(get_date(ptr), JSON.stringify(data[ptr]))
+          const new_avg = ((Number(data[view[ptr]]["r"]) * Number(data[view[ptr]]["n"])) + (Number(slider.value) / 2)) / (Number(data[view[ptr]]["n"]) + 1)
+          Object.assign(data[view[ptr]], {rating : new_avg})
+          localStorage.setItem(get_date(ptr), JSON.stringify(data[view[ptr]]))
           document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(new_avg * 100) / 100
           document.querySelector("#interaction").classList.add("oov")
           document.querySelector("#interaction").style.visibility = "hidden"
@@ -331,10 +332,10 @@
 
         if(method == "face"){
           if(localStorage.getItem(get_date(ptr))){
-            document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(data[ptr]["r"] * 100) / 100
+            document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(data[view[ptr]]["r"] * 100) / 100
           }
 
-          document.querySelector("img").src = data[ptr]["i"]
+          document.querySelector("img").src = data[view[ptr]]["i"]
         }
       }
 
@@ -356,28 +357,67 @@
         return
       }
 
-      const filters = [[[0, "g", "m"], [0, "g", "f"]], [[0, "ra", "b"], [0, "ra", "l"], [0, "ra", "w"], [0, "ra", "m"]]]
+      let filters = [[[0, "g", "m"], [0, "g", "f"]], [[0, "ra", "b"], [0, "ra", "l"], [0, "ra", "a"], [0, "ra", "w"], [0, "ra", "m"]]]
 
       function image_filter(){
         let filtered = false
-        view = data
-        for(let n = 0; n < filters.length; i++){
-          if(filters[i][0]){
-            view = view.filter((o)=>{return o[filters[i][1]] == filters[i][2] })
+        let res = null
+        partial_views = []
+        for(let i = 0; i < filters.length; i++){
+          temp_view = []
+          for(let j = 0; j < filters[i].length; j++){
+            if(filters[i][j][0]){
+              temp_view.push(data.filter(
+                (e)=>{
+                  return e[filters[i][j][1]] == filters[i][j][2]
+                }
+              ))
+            }
+          }
+
+          temp_view = temp_view.flat()
+          temp_view = temp_view.map(
+              (e1)=>{
+                return data.findIndex(
+                  (e2)=>{
+                    return e1 == e2
+                })
+            })
+            temp_view.sort((x, y)=>{return x-y})
+          if(temp_view.length > 0){
+            partial_views.push(temp_view)
           }
         }
-        view = view.map((i)=>{return data.findIndex((j)=>{return i == j})})
-        console.log(view)
+
+        res = partial_views.flat()
+
+        for(let i = 0; i < partial_views.length; i++){
+          res = res.filter((e)=>{
+            return partial_views[i].includes(e)
+          })
+        }
+
+        res = Array.from(new Set(res))
+        
+        if(res.length < 1){
+          view = Array.from(Array(data.length).keys())
+        } else {
+          view = res
+        }
+        shift("+")
+        shift("-")
+        localStorage.setItem("filters", JSON.stringify(filters))
+        return
       }
 
       do_rating_stuff("face").then(()=>{
         document.querySelector("#position").innerHTML = (ptr + 1).toString() + "/" + data.length
+        if(localStorage.getItem("filters")){
+          filters = JSON.parse(localStorage.getItem("filters"))
+        }
         image_filter()
       })
       
     </script>
-    <noscript>
-      <h1 style="font: #F00">TURN ON JAVASCRIPT!</h1>
-    </noscript>
-  </body>-->
+  </body>
 </html>

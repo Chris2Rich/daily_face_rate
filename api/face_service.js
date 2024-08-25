@@ -1,6 +1,7 @@
 const axios = require('axios');
 
-const day = Math.floor(((new Date().getTime()) - 1724022000000) / 86400000)
+//const day = Math.floor(((new Date().getTime()) - 1724022000000) / 86400000)
+const day = 6
 let daily_data = null
 
 const data_get = JSON.stringify({

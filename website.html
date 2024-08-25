@@ -253,7 +253,7 @@
           ptr = view.length - 1
         }
 
-        document.querySelector("img").setAttribute("data-image-id", ptr)
+        document.querySelector("img").setAttribute("data-image-id", view[ptr])
         document.querySelector("#position").innerHTML = (ptr + 1).toString() + "/" + view.length
 
         if(localStorage.getItem(get_date(ptr))){

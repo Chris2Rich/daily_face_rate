@@ -414,6 +414,11 @@
         document.querySelector("#position").innerHTML = (ptr + 1).toString() + "/" + data.length
         if(localStorage.getItem("filters")){
           filters = JSON.parse(localStorage.getItem("filters"))
+          const temp_filters = filters.flat()
+          const filter_inputs = document.querySelector("#filter").querySelectorAll("input")
+          for(let i = 0; i < temp_filters.length; i++){
+            filter_inputs[i].checked = temp_filters[i][0]
+          }
         }
         image_filter()
       })

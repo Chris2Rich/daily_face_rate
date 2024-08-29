@@ -6,7 +6,7 @@ let db_data = null
 let daily_data = null
 
 async function get_data(){
-  db_data = await axios({
+  const r1 = await axios({
     method: 'post',
     url: process.env.DATA_API_URL + '/action/aggregate',
     headers: {
@@ -29,29 +29,32 @@ async function get_data(){
     }
   })
 
+  db_data = r1.data.document[0]
+
+  const r2 = await axios({
+    method: 'post',
+    url: process.env.DATA_API_URL + '/action/aggregate',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Request-Headers': '*',
+      'api-key': process.env.DATA_API_KEY,
+    },
+    data: {
+      "collection": "data",
+      "database": "data",
+      "dataSource": "raterandoms",
+      "pipeline": [{
+        $project: {
+          nthObject: { $arrayElemAt: ["$daily", day] }
+        }
+      }]
+    }
+  })
+
+  daily_data = r2.data.document[0].nthObject
+  Object.assign(db_data, {"daily" : daily_data})
+
   console.log(db_data)
-
-  // daily_data = await axios({
-  //   method: 'post',
-  //   url: process.env.DATA_API_URL + '/action/aggregate',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'Access-Control-Request-Headers': '*',
-  //     'api-key': process.env.DATA_API_KEY,
-  //   },
-  //   data: {
-  //     "collection": "data",
-  //     "database": "data",
-  //     "dataSource": "raterandoms",
-  //     "pipeline": [{
-  //       $project: {
-  //         nthObject: { $arrayElemAt: ["$daily", day] }
-  //       }
-  //     }]
-  //   }
-  // })[0].nthObject
-
-  // Object.assign(db_data, {"daily" : daily_data})
   return
 }
 

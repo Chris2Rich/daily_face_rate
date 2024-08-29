@@ -24,6 +24,8 @@ let db_data = await axios({
   }
 })
 
+console.log(db_data)
+
 // let daily_data = await axios({
 //   method: 'post',
 //   url: process.env.DATA_API_URL + '/action/aggregate',

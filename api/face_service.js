@@ -2,22 +2,7 @@ const axios = require('axios');
 
 //const day = Math.floor(((new Date().getTime()) - 1724022000000) / 86400000)
 const day = 6
-let daily_data = null
-
-const data_get = JSON.stringify({
-  "collection": "data",
-  "database": "data",
-  "dataSource": "raterandoms",
-  "pipeline": [{
-    $project: {
-      nthObject: { $arrayElemAt: ["$data", day] }
-    }
-  }]
-})
-
-let data_post = null
-
-const config_get = {
+let db_data = axios({
   method: 'post',
   url: process.env.DATA_API_URL + '/action/aggregate',
   headers: {
@@ -25,31 +10,41 @@ const config_get = {
     'Access-Control-Request-Headers': '*',
     'api-key': process.env.DATA_API_KEY,
   },
-  data: data_get
-}
+  data: {
+    "collection": "data",
+    "database": "data",
+    "dataSource": "raterandoms",
+    "pipeline": [{
+      $project: {
+        athletes: 1,
+        rappers: 1,
+        creators: 1
+      }
+    }]
+  }
+})
 
-const config_post = {
-  method: 'post',
-  url: process.env.DATA_API_URL + '/action/updateOne',
-  headers: {
-    'Content-Type': 'application/json',
-    'Access-Control-Request-Headers': '*',
-    'api-key': process.env.DATA_API_KEY,
-  },
-  data: data_post
-}
+// let daily_data = await axios({
+//   method: 'post',
+//   url: process.env.DATA_API_URL + '/action/aggregate',
+//   headers: {
+//     'Content-Type': 'application/json',
+//     'Access-Control-Request-Headers': '*',
+//     'api-key': process.env.DATA_API_KEY,
+//   },
+//   data: {
+//     "collection": "data",
+//     "database": "data",
+//     "dataSource": "raterandoms",
+//     "pipeline": [{
+//       $project: {
+//         nthObject: { $arrayElemAt: ["$daily", day] }
+//       }
+//     }]
+//   }
+// })
 
-async function get_data(){
-  const response = await axios(config_get)
-  daily_data = response.data.documents[0].nthObject
-  return
-}
-
-async function post_data(){
-  const response = await axios(config_post)
-  await get_data()
-  return
-}
+// Object.assign(db_data, {"daily" : daily_data})
 
 function parse_url(s){
   let res_buffer = []
@@ -70,32 +65,14 @@ function parse_url(s){
 }
 
 module.exports = async (req, res) => {
-  if(daily_data == null){
-    await get_data()
-  }
-
   const url_data = parse_url(req.url)
   switch(url_data[0]){
-    case "rate":
-      Object.assign(config_post, {data: JSON.stringify({
-        "collection": "data",
-        "database": "data",
-        "dataSource": "raterandoms",
-        "filter": { "_id": { "$oid": "66c388c15108060f7786c50c" } },
-        "update": {
-          "$set": {
-          [`data.${day}.${url_data[1]}.r`]: ((daily_data[url_data[1]]["r"] * daily_data[url_data[1]]["n"]) + Number(url_data[2])) / (daily_data[url_data[1]]["n"] + 1),
-          [`data.${day}.${url_data[1]}.n`]: (daily_data[url_data[1]]["n"] + 1)
-          }
-        }
-      })})
+    // case "rate":
 
-      await post_data()
-
-      res.status(200).json(daily_data)
-      break
+    //   res.status(200).json(db_data[url_data[3]][url_data[1]])
+    //   break
     case "face":
-      res.status(200).json(daily_data)
+      res.status(200).json(await db_data)
       break
     default:
       res.status(404).json({error: 404})

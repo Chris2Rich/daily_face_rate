@@ -49,7 +49,7 @@ async function get_data(){
     }
   })
 
-  console.log(db_data, daily_data)
+  console.log(db_data, "tktktk", daily_data)
   // Object.assign(db_data, {"daily" : daily_data})
   return
 }

@@ -30,8 +30,6 @@ const response = await axios({
 db_data = response.data.documents
 }
 
-console.log(db_data)
-
 // let daily_data = axios({
 //   method: 'post',
 //   url: process.env.DATA_API_URL + '/action/aggregate',
@@ -74,6 +72,8 @@ function parse_url(s){
 
 module.exports = async (req, res) => {
   const url_data = parse_url(req.url)
+  await get_data()
+  console.log(db_data)
   
   switch(url_data[0]){
     // case "rate":

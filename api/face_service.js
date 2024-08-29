@@ -30,7 +30,6 @@ async function get_data(){
   })
 
   db_data = r1.data.document[0]
-  console.log(db_data)
 
   const r2 = await axios({
     method: 'post',
@@ -55,7 +54,6 @@ async function get_data(){
   daily_data = r2.data.document[0].nthObject
   Object.assign(db_data, {"daily" : daily_data})
 
-  console.log(db_data)
   return
 }
 

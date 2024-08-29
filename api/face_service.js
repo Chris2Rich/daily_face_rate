@@ -27,7 +27,7 @@ async function get_data(){
         }
       }]
     }
-  }).data.documents[0]
+  })[0]
 
   daily_data = await axios({
     method: 'post',

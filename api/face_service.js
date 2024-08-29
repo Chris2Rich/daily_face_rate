@@ -29,6 +29,8 @@ async function get_data(){
     }
   })[0]
 
+  console.log(db_data)
+
   // daily_data = await axios({
   //   method: 'post',
   //   url: process.env.DATA_API_URL + '/action/aggregate',

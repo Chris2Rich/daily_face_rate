@@ -27,7 +27,7 @@ async function get_data(){
         }
       }]
     }
-  }).data[0]
+  })
 
   console.log(db_data)
 
@@ -49,7 +49,7 @@ async function get_data(){
   //       }
   //     }]
   //   }
-  // })
+  // })[0].nthObject
 
   // Object.assign(db_data, {"daily" : daily_data})
   return
@@ -83,7 +83,7 @@ module.exports = async (req, res) => {
     //   res.status(200).json(db_data[url_data[3]][url_data[1]])
     //   break
     case "face":
-      res.status(200).json(db_data)
+      res.status(200).json(db_data[0])
       break
     default:
       res.status(404).json({error: 404})

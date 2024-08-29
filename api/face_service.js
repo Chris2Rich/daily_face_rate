@@ -27,29 +27,28 @@ async function get_data(){
         }
       }]
     }
-  })[0]
-
-  daily_data = await axios({
-    method: 'post',
-    url: process.env.DATA_API_URL + '/action/aggregate',
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Request-Headers': '*',
-      'api-key': process.env.DATA_API_KEY,
-    },
-    data: {
-      "collection": "data",
-      "database": "data",
-      "dataSource": "raterandoms",
-      "pipeline": [{
-        $project: {
-          nthObject: { $arrayElemAt: ["$daily", day] }
-        }
-      }]
-    }
   })
 
-  console.log(db_data, "tktktk", daily_data)
+  // daily_data = await axios({
+  //   method: 'post',
+  //   url: process.env.DATA_API_URL + '/action/aggregate',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'Access-Control-Request-Headers': '*',
+  //     'api-key': process.env.DATA_API_KEY,
+  //   },
+  //   data: {
+  //     "collection": "data",
+  //     "database": "data",
+  //     "dataSource": "raterandoms",
+  //     "pipeline": [{
+  //       $project: {
+  //         nthObject: { $arrayElemAt: ["$daily", day] }
+  //       }
+  //     }]
+  //   }
+  // })
+
   // Object.assign(db_data, {"daily" : daily_data})
   return
 }

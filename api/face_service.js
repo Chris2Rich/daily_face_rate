@@ -2,7 +2,7 @@ const axios = require('axios');
 
 //const day = Math.floor(((new Date().getTime()) - 1724022000000) / 86400000)
 const day = 6
-let db_data = axios({
+let db_data = await axios({
   method: 'post',
   url: process.env.DATA_API_URL + '/action/aggregate',
   headers: {
@@ -72,7 +72,7 @@ module.exports = async (req, res) => {
     //   res.status(200).json(db_data[url_data[3]][url_data[1]])
     //   break
     case "face":
-      res.status(200).json(await db_data)
+      res.status(200).json(db_data)
       break
     default:
       res.status(404).json({error: 404})

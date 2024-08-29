@@ -2,7 +2,10 @@ const axios = require('axios');
 
 //const day = Math.floor(((new Date().getTime()) - 1724022000000) / 86400000)
 const day = 6
-let db_data = axios({
+let db_data = null
+
+async function get_data(){
+const response = await axios({
   method: 'post',
   url: process.env.DATA_API_URL + '/action/aggregate',
   headers: {
@@ -23,6 +26,9 @@ let db_data = axios({
     }]
   }
 })
+
+db_data = response.data.documents
+}
 
 console.log(db_data)
 
@@ -68,13 +74,14 @@ function parse_url(s){
 
 module.exports = async (req, res) => {
   const url_data = parse_url(req.url)
+  
   switch(url_data[0]){
     // case "rate":
 
     //   res.status(200).json(db_data[url_data[3]][url_data[1]])
     //   break
     case "face":
-      res.status(200).json(await db_data)
+      res.status(200).json(db_data)
       break
     default:
       res.status(404).json({error: 404})

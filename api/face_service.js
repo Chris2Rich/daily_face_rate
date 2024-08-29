@@ -30,6 +30,7 @@ async function get_data(){
   })
 
   db_data = r1.data.document[0]
+  console.log(db_data)
 
   const r2 = await axios({
     method: 'post',

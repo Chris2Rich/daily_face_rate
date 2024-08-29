@@ -47,7 +47,7 @@ async function get_data(){
         }
       }]
     }
-  }).data.documents[0].nthObject
+  })[0].nthObject
 
   Object.assign(db_data, {"daily" : daily_data})
   return

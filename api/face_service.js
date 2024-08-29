@@ -3,54 +3,55 @@ const axios = require('axios');
 //const day = Math.floor(((new Date().getTime()) - 1724022000000) / 86400000)
 const day = 6
 let db_data = null
+let daily_data = null
 
 async function get_data(){
-const response = await axios({
-  method: 'post',
-  url: process.env.DATA_API_URL + '/action/aggregate',
-  headers: {
-    'Content-Type': 'application/json',
-    'Access-Control-Request-Headers': '*',
-    'api-key': process.env.DATA_API_KEY,
-  },
-  data: {
-    "collection": "data",
-    "database": "data",
-    "dataSource": "raterandoms",
-    "pipeline": [{
-      $project: {
-        athletes: 1,
-        rappers: 1,
-        creators: 1
-      }
-    }]
-  }
-})
+  db_data = await axios({
+    method: 'post',
+    url: process.env.DATA_API_URL + '/action/aggregate',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Request-Headers': '*',
+      'api-key': process.env.DATA_API_KEY,
+    },
+    data: {
+      "collection": "data",
+      "database": "data",
+      "dataSource": "raterandoms",
+      "pipeline": [{
+        $project: {
+          athletes: 1,
+          rappers: 1,
+          creators: 1,
+          _id: 0
+        }
+      }]
+    }
+  }).data.documents[0]
 
-db_data = response.data.documents
+  daily_data = await axios({
+    method: 'post',
+    url: process.env.DATA_API_URL + '/action/aggregate',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Request-Headers': '*',
+      'api-key': process.env.DATA_API_KEY,
+    },
+    data: {
+      "collection": "data",
+      "database": "data",
+      "dataSource": "raterandoms",
+      "pipeline": [{
+        $project: {
+          nthObject: { $arrayElemAt: ["$daily", day] }
+        }
+      }]
+    }
+  }).data.documents[0].nthObject
+
+  Object.assign(db_data, {"daily" : daily_data})
+  return
 }
-
-// let daily_data = axios({
-//   method: 'post',
-//   url: process.env.DATA_API_URL + '/action/aggregate',
-//   headers: {
-//     'Content-Type': 'application/json',
-//     'Access-Control-Request-Headers': '*',
-//     'api-key': process.env.DATA_API_KEY,
-//   },
-//   data: {
-//     "collection": "data",
-//     "database": "data",
-//     "dataSource": "raterandoms",
-//     "pipeline": [{
-//       $project: {
-//         nthObject: { $arrayElemAt: ["$daily", day] }
-//       }
-//     }]
-//   }
-// })
-
-// Object.assign(db_data, {"daily" : daily_data})
 
 function parse_url(s){
   let res_buffer = []
@@ -74,7 +75,7 @@ module.exports = async (req, res) => {
   const url_data = parse_url(req.url)
   await get_data()
   console.log(db_data)
-  
+
   switch(url_data[0]){
     // case "rate":
 

@@ -27,7 +27,7 @@ async function get_data(){
         }
       }]
     }
-  })[0]
+  }).data[0]
 
   console.log(db_data)
 

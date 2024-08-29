@@ -47,9 +47,10 @@ async function get_data(){
         }
       }]
     }
-  })[0].nthObject
+  })
 
-  Object.assign(db_data, {"daily" : daily_data})
+  console.log(db_data, daily_data)
+  // Object.assign(db_data, {"daily" : daily_data})
   return
 }
 
@@ -74,7 +75,6 @@ function parse_url(s){
 module.exports = async (req, res) => {
   const url_data = parse_url(req.url)
   await get_data()
-  console.log(db_data)
 
   switch(url_data[0]){
     // case "rate":

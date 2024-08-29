@@ -349,6 +349,7 @@
 
       animate()
 
+      //tktktk if daily
       if(localStorage.getItem(get_date(ptr))){
         document.querySelector("#interaction").style.visibility = "hidden"
       }
@@ -362,7 +363,6 @@
         if(method == "rate"){
           const new_avg = ((Number(data[category][view[ptr]]["r"]) * Number(data[category][view[ptr]]["n"])) + (Number(slider.value) / 2)) / (Number(data[category][view[ptr]]["n"]) + 1)
           Object.assign(data[category][view[ptr]], {rating : new_avg})
-          localStorage.setItem(get_date(ptr), JSON.stringify(data[category][view[ptr]]))
           document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(new_avg * 100) / 100
           document.querySelector("#interaction").classList.add("oov")
           document.querySelector("#interaction").style.visibility = "hidden"
@@ -371,6 +371,8 @@
             shift("+")
             document.querySelector(".right-arrow").classList.remove(":hover")
           }, 2000);
+          //tktktk if daily
+          localStorage.setItem(get_date(ptr), JSON.stringify(data[category][view[ptr]]))
         }
 
         const response = await fetch(target_url)

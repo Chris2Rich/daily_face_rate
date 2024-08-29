@@ -29,7 +29,7 @@ async function get_data(){
     }
   })
 
-  db_data = r1.data.document[0]
+  db_data = r1.data.documents[0]
 
   const r2 = await axios({
     method: 'post',
@@ -51,9 +51,13 @@ async function get_data(){
     }
   })
 
-  daily_data = r2.data.document[0].nthObject
-  Object.assign(db_data, {"daily" : daily_data})
+  async function setdata(){
 
+    return
+  }
+
+  daily_data = r2.data.documents[0].nthObject
+  Object.assign(db_data, {"daily" : daily_data})
   return
 }
 
@@ -80,12 +84,12 @@ module.exports = async (req, res) => {
   await get_data()
 
   switch(url_data[0]){
-    // case "rate":
+    case "rate":
 
-    //   res.status(200).json(db_data[url_data[3]][url_data[1]])
-    //   break
+      res.status(200).json(db_data[url_data[3]][url_data[1]])
+      break
     case "face":
-      res.status(200).json(db_data[0])
+      res.status(200).json(db_data)
       break
     default:
       res.status(404).json({error: 404})

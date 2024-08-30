@@ -186,7 +186,9 @@
       <h1 style="font: #F00">TURN ON JAVASCRIPT!</h1>
     </noscript>
     
-    <div style="position: fixed; top: 0px; left: 0px; background-image: radial-gradient(circle at bottom, #273d2c, #172727); background-size: cover; background-repeat: no-repeat; width: 100vw; height: 100vh; z-index: -1; transition-duration: 0ms;"></div>
+    <div style="position: fixed; top: 0px; left: 0px; background-image: radial-gradient(circle at bottom, #273d2c, #172727); background-size: cover; background-repeat: no-repeat; width: 100vw; height: 100vh; z-index: -1; transition-duration: 0ms;">
+      <img style="position: fixed; top: 0px; left: 0px; width: 100vw; height: 100vh; transition-duration: 0ms; object-fit: cover; mask-image: radial-gradient(#0002 35%, #000c); -webkit-mask-image: radial-gradient(#0002 35%, #000c);" src="https://i.imgur.com/1GxFXcy.png" alt="">
+    </div>
     
     <div id="onboarding" style="position:absolute; height: 100%; width:100%;">
       <h1 class="centered" style="margin-top: 2rem; font-size: 2rem">Just a site to rate randoms</h1>
@@ -264,10 +266,10 @@
         <h1 class="centered" style="margin-top: 2rem; font-size: 2rem; text-decoration: underline;">Categories</h1>
 
         <div id="category-list" class="centered" style=" margin-top: 1rem; margin-bottom: 1rem; text-align: left;">
-          <img src="https://icongr.am/material/calendar-today.svg?size=50&color=ceebde"><label>Daily<input type="radio" name="category" onclick="category = 'daily'"></label><br><br><br>
-          <img src="https://icongr.am/material/movie-open.svg?size=50&color=ceebde"><label>Creators<input type="radio" name="category" onclick="category = 'creators'"></label><br><br><br>
-          <img src="https://icongr.am/material/microphone-variant.svg?size=50&color=ceebde"><label>Rappers<input type="radio" name="category" onclick="category = 'rappers'"></label><br><br><br>
-          <img src="https://icongr.am/material/basketball.svg?size=50&color=ceebde"><label>Athletes<input type="radio" name="category" onclick="category = 'athletes'"></label>
+          <img src="https://icongr.am/material/calendar-today.svg?size=50&color=ceebde" alt=""><label>Daily<input type="radio" name="category" onclick="category = 'daily'; ptr = 0; shift('+'); shift('-');"></label><br><br><br>
+          <img src="https://icongr.am/material/movie-open.svg?size=50&color=ceebde" alt=""><label>Creators<input type="radio" name="category" onclick="category = 'creators'; ptr = 0; shift('+'); shift('-');"></label><br><br><br>
+          <img src="https://icongr.am/material/microphone-variant.svg?size=50&color=ceebde" alt=""><label>Rappers<input type="radio" name="category" onclick="category = 'rappers'; ptr = 0; shift('+'); shift('-');"></label><br><br><br>
+          <img src="https://icongr.am/material/basketball.svg?size=50&color=ceebde" alt=""><label>Athletes<input type="radio" name="category" onclick="category = 'athletes'; ptr = 0; shift('+'); shift('-');"></label>
         </div>
       </div>
 
@@ -319,7 +321,7 @@
           ptr = view.length - 1
         }
 
-        document.querySelector("img").setAttribute("data-image-id", view[ptr])
+        document.querySelector("#pic").setAttribute("data-image-id", view[ptr])
         document.querySelector("#position").innerHTML = (ptr + 1).toString() + "/" + view.length
 
         if(localStorage.getItem(get_date(ptr))){
@@ -327,12 +329,12 @@
           document.querySelector("#interaction").style.visibility = "hidden"
 
           document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(data[category][view[ptr]]["r"]  * 100) / 100
-          document.querySelector("img").src = data[category][view[ptr]]["i"]
+          document.querySelector("#pic").src = data[category][view[ptr]]["i"]
         } else {
           document.querySelector("#interaction").classList.remove("oov")
           document.querySelector("#interaction").style.visibility = "visible"
           document.querySelector("#title").innerHTML = "Just a site to rate randoms"
-          document.querySelector("img").src = data[category][view[ptr]]["i"]
+          document.querySelector("#pic").src = data[category][view[ptr]]["i"]
         }
 
         return
@@ -416,7 +418,7 @@
             document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(data[category][view[ptr]]["r"] * 100) / 100
           }
 
-          document.querySelector("img").src = data[category][view[ptr]]["i"]
+          document.querySelector("#pic").src = data[category][view[ptr]]["i"]
         }
       }
 

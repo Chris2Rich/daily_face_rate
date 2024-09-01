@@ -51,14 +51,40 @@ async function get_data(){
     }
   })
 
-  async function setdata(){
-
-    return
-  }
-
   daily_data = r2.data.documents[0].nthObject
   Object.assign(db_data, {"daily" : daily_data})
   return
+}
+
+async function set_data(url_data){
+  let category = url_data[3] === "daily" ? `daily.${day}` : url_data[3];
+
+  const obj = db_data[url_data[3]][url_data[1]]
+  obj["r"] = ((Number(obj["r"]) * Number(obj["n"])) + Number(url_data[2])) / (Number(obj["n"]) + 1)
+  obj["n"] = Number(obj["n"]) + 1
+
+  const response = await axios({
+    method: 'post',
+    url: process.env.DATA_API_URL + '/action/updateOne',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Request-Headers': '*',
+      'api-key': process.env.DATA_API_KEY,
+    },
+    data: {
+      "collection": "data",
+      "database": "data",
+      "dataSource": "raterandoms",
+      "filter": {},
+      "update": {
+        $set: {
+          [`${category}.${url_data[1]}.r`]: obj["r"],
+          [`${category}.${url_data[1]}.n`]: obj["n"]
+        }
+      }
+    }
+  })
+  return obj
 }
 
 function parse_url(s){
@@ -81,12 +107,14 @@ function parse_url(s){
 
 module.exports = async (req, res) => {
   const url_data = parse_url(req.url)
-  await get_data()
+  if(db_data == null){
+    await get_data()
+  }
 
   switch(url_data[0]){
     case "rate":
-
-      res.status(200).json(db_data[url_data[3]][url_data[1]])
+      const db_res = await set_data(url_data)
+      res.status(200).json(db_res)
       break
     case "face":
       res.status(200).json(db_data)

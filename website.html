@@ -154,7 +154,7 @@
         }
       }
 
-      #category-list img {
+      .category-list img {
         top: 10px;
         right: 0.5rem;
         width: 35px;
@@ -186,21 +186,35 @@
       <h1 style="font: #F00">TURN ON JAVASCRIPT!</h1>
     </noscript>
     
-    <div style="position: fixed; top: 0px; left: 0px; background-image: radial-gradient(circle at bottom, #273d2c, #172727); background-size: cover; background-repeat: no-repeat; width: 100vw; height: 100vh; z-index: -1; transition-duration: 0ms;"></div>
+    <div style="position: fixed; top: 0px; left: 0px; background-image: radial-gradient(circle at bottom, #273d2c, #172727); background-size: cover; background-repeat: no-repeat; width: 100vw; height: 100vh; z-index: -1; transition-duration: 0ms;">
+      <img style="position: fixed; top: 0px; left: 0px; width: 100vw; height: 100vh; transition-duration: 0ms; object-fit: cover; mask-image: radial-gradient(#0002 35%, #000c); -webkit-mask-image: radial-gradient(#0002 35%, #000c);" src="https://i.imgur.com/1GxFXcy.png" alt="" class="oov" onload="this.classList.remove('oov')">
+    </div>
     
     <div id="onboarding" style="position:absolute; height: 100%; width:100%;">
       <h1 class="centered" style="margin-top: 2rem; font-size: 2rem">Just a site to rate randoms</h1>
       <h1 class="centered" style="margin-top: 2rem; font-size: 1.5rem; text-decoration: underline;">Choose Who you want to see</h1>
-      <div class="centered" style="margin-top: 1rem; margin-bottom: 1rem;">
-        <h1 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.25rem;">Gender</h1>
-        <li><label for="item1">Men<input type="checkbox" onchange="filters[0][0][0] = this.checked; image_filter()"></label></li>
-        <li><label for="item1">Women<input type="checkbox" onchange="filters[0][1][0] = this.checked; image_filter();"></label></li>
-        <h1 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.25rem;">Race</h1>
-        <li><label for="item1">Black<input type="checkbox" onchange="filters[1][0][0] = this.checked; image_filter()"></label></li>
-        <li><label for="item1">Latino/a<input type="checkbox" onchange="filters[1][1][0] = this.checked; image_filter()"></label></li>
-        <li><label for="item1">Asian<input type="checkbox" onchange="filters[1][2][0] = this.checked; image_filter()"></label></li>
-        <li><label for="item1">White<input type="checkbox" onchange="filters[1][3][0] = this.checked; image_filter()"></label></li>
-        <li><label for="item1">Mixed<input type="checkbox" onchange="filters[1][4][0] = this.checked; image_filter()"></label></li>
+      <div class="centered" style="margin-top: 1rem; margin-bottom: 1rem; display: flex; flex-direction: row;">
+        <div>
+          <h1 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.25rem;">Gender</h1>
+          <li><label >Men<input type="checkbox" onchange="filters[0][0][0] = this.checked; image_filter()"></label></li>
+          <li><label >Women<input type="checkbox" onchange="filters[0][1][0] = this.checked; image_filter();"></label></li>
+          <h1 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.25rem;">Race</h1>
+          <li><label >Black<input type="checkbox" onchange="filters[1][0][0] = this.checked; image_filter()"></label></li>
+          <li><label >Latino/a<input type="checkbox" onchange="filters[1][1][0] = this.checked; image_filter()"></label></li>
+          <li><label >Asian<input type="checkbox" onchange="filters[1][2][0] = this.checked; image_filter()"></label></li>
+          <li><label >White<input type="checkbox" onchange="filters[1][3][0] = this.checked; image_filter()"></label></li>
+          <li><label >Mixed<input type="checkbox" onchange="filters[1][4][0] = this.checked; image_filter()"></label></li>
+        </div>
+
+        <div style="margin-left: 5rem;">
+          <h1 class="centered" style="margin-top: 2rem; font-size: 1.25rem;">Categories</h1>
+          <div class="centered category-list" style=" margin-top: 1rem; margin-bottom: 1rem; text-align: left;">
+            <img src="https://icongr.am/material/calendar-today.svg?size=50&color=ceebde" alt=""><label>Daily<input type="radio" name="onboarding-category" onclick="set_category('daily')" checked=1></label><br><br>
+            <img src="https://icongr.am/material/movie-open.svg?size=50&color=ceebde" alt=""><label>Creators<input type="radio" name="onboarding-category" onclick="set_category('creators')"></label><br><br>
+            <img src="https://icongr.am/material/microphone-variant.svg?size=50&color=ceebde" alt=""><label>Rappers<input type="radio" name="onboarding-category" onclick="set_category('rappers')"></label><br><br>
+            <img src="https://icongr.am/material/basketball.svg?size=50&color=ceebde" alt=""><label>Athletes<input type="radio" name="onboarding-category" onclick="set_category('athletes')"></label>
+          </div>
+        </div>
       </div>
 
       <button onmousedown="localStorage.setItem('onboarded', 'true'); onboard()" class="centered" style="font-size: 1.25rem; margin-left: 0.5rem; margin-top: 1rem; box-shadow: 3.5px 3.5px 10px #000; width: 8rem; left: calc(50% - 5rem)">
@@ -248,14 +262,14 @@
 
         <div id="filter-list" class="centered" style="margin-top: 1rem; margin-bottom: 1rem; text-align: left;">
           <h1 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.25rem;">Gender</h1>
-          <li><label for="item1">Men  <input type="checkbox" onchange="filters[0][0][0] = this.checked; image_filter()"></label></li>
-          <li><label for="item1">Women<input type="checkbox" onchange="filters[0][1][0] = this.checked; image_filter();"></label></li>
+          <li><label >Men<input type="checkbox" onchange="filters[0][0][0] = this.checked; image_filter()"></label></li>
+          <li><label >Women<input type="checkbox" onchange="filters[0][1][0] = this.checked; image_filter();"></label></li>
           <h1 style="margin-top: 2rem; margin-bottom: 0.5rem; font-size: 1.25rem;">Race</h1>
-          <li><label for="item1">Black<input type="checkbox" onchange="filters[1][0][0] = this.checked; image_filter()"></label></li>
-          <li><label for="item1">Latino/a<input type="checkbox" onchange="filters[1][1][0] = this.checked; image_filter()"></label></li>
-          <li><label for="item1">Asian<input type="checkbox" onchange="filters[1][2][0] = this.checked; image_filter()"></label></li>
-          <li><label for="item1">White<input type="checkbox" onchange="filters[1][3][0] = this.checked; image_filter()"></label></li>
-          <li><label for="item1">Mixed<input type="checkbox" onchange="filters[1][4][0] = this.checked; image_filter()"></label></li>
+          <li><label >Black<input type="checkbox" onchange="filters[1][0][0] = this.checked; image_filter()"></label></li>
+          <li><label >Latino/a<input type="checkbox" onchange="filters[1][1][0] = this.checked; image_filter()"></label></li>
+          <li><label >Asian<input type="checkbox" onchange="filters[1][2][0] = this.checked; image_filter()"></label></li>
+          <li><label >White<input type="checkbox" onchange="filters[1][3][0] = this.checked; image_filter()"></label></li>
+          <li><label >Mixed<input type="checkbox" onchange="filters[1][4][0] = this.checked; image_filter()"></label></li>
         </div>
       </div>
 
@@ -263,11 +277,11 @@
         <img src="https://icongr.am/material/close.svg?size=50&color=ceebde" class="filter-button" style="top: 2rem; right: 2rem; left: unset;" onclick="show_modal('#category')" alt="click to close" title="Click to close">
         <h1 class="centered" style="margin-top: 2rem; font-size: 2rem; text-decoration: underline;">Categories</h1>
 
-        <div id="category-list" class="centered" style=" margin-top: 1rem; margin-bottom: 1rem; text-align: left;">
-          <img src="https://icongr.am/material/calendar-today.svg?size=50&color=ceebde"><label>Daily<input type="radio" name="category" onclick="category = 'daily'"></label><br><br><br>
-          <img src="https://icongr.am/material/movie-open.svg?size=50&color=ceebde"><label>Creators<input type="radio" name="category" onclick="category = 'creators'"></label><br><br><br>
-          <img src="https://icongr.am/material/microphone-variant.svg?size=50&color=ceebde"><label>Rappers<input type="radio" name="category" onclick="category = 'rappers'"></label><br><br><br>
-          <img src="https://icongr.am/material/basketball.svg?size=50&color=ceebde"><label>Athletes<input type="radio" name="category" onclick="category = 'athletes'"></label>
+        <div class="centered category-list" style=" margin-top: 1rem; margin-bottom: 1rem; text-align: left;">
+          <img src="https://icongr.am/material/calendar-today.svg?size=50&color=ceebde" alt=""><label>Daily<input type="radio" name="category" onclick="set_category('daily')"></label><br><br><br>
+          <img src="https://icongr.am/material/movie-open.svg?size=50&color=ceebde" alt=""><label>Creators<input type="radio" name="category" onclick="set_category('creators')"></label><br><br><br>
+          <img src="https://icongr.am/material/microphone-variant.svg?size=50&color=ceebde" alt=""><label>Rappers<input type="radio" name="category" onclick="set_category('rappers')"></label><br><br><br>
+          <img src="https://icongr.am/material/basketball.svg?size=50&color=ceebde" alt=""><label>Athletes<input type="radio" name="category" onclick="set_category('athletes')"></label>
         </div>
       </div>
 
@@ -291,13 +305,17 @@
         }
       }
 
-      function get_date(id){
+      function get_date(c, id){
         const o = new Date()
         const d = o.getDate()
         const m = o.getUTCMonth()
         const y = o.getUTCFullYear()
 
-        return [id,d,m,y].toString()
+        return [c,id,d,m,y].toString()
+      }
+
+      function get_item(c, id){
+        return [c, id].toString()
       }
 
       function shift(dir){
@@ -319,20 +337,20 @@
           ptr = view.length - 1
         }
 
-        document.querySelector("img").setAttribute("data-image-id", view[ptr])
+        document.querySelector("#pic").setAttribute("data-image-id", view[ptr])
         document.querySelector("#position").innerHTML = (ptr + 1).toString() + "/" + view.length
 
-        if(localStorage.getItem(get_date(ptr))){
+        if(localStorage.getItem(get_date(category, ptr)) || localStorage.getItem(get_item(category, ptr))){
           document.querySelector("#interaction").classList.add("oov")
           document.querySelector("#interaction").style.visibility = "hidden"
 
           document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(data[category][view[ptr]]["r"]  * 100) / 100
-          document.querySelector("img").src = data[category][view[ptr]]["i"]
+          document.querySelector("#pic").src = data[category][view[ptr]]["i"]
         } else {
           document.querySelector("#interaction").classList.remove("oov")
           document.querySelector("#interaction").style.visibility = "visible"
           document.querySelector("#title").innerHTML = "Just a site to rate randoms"
-          document.querySelector("img").src = data[category][view[ptr]]["i"]
+          document.querySelector("#pic").src = data[category][view[ptr]]["i"]
         }
 
         return
@@ -349,12 +367,18 @@
 
       animate()
 
-      if(localStorage.getItem(get_date(ptr))){
-        document.querySelector("#interaction").style.visibility = "hidden"
+      if(category == "daily"){
+        if(localStorage.getItem(get_date(category, ptr))){
+          document.querySelector("#interaction").style.visibility = "hidden"
+        }
+      } else {
+        if(localStorage.getItem(get_id(category, ptr))){
+          document.querySelector("#interaction").style.visibility = "hidden"
+        }
       }
 
       async function do_rating_stuff(method){
-        const target_url = window.location + `/api/${method}/${document.querySelector("#pic").getAttribute("data-image-id")}/${(slider.value / 2)}/${category}`
+        const target_url = window.location + `/api/${method}/${document.querySelector("#pic").getAttribute("data-image-id")}/${(slider.value / 2)}/${category}/`
         
         document.querySelector("#button_load").classList.remove("oov")
         document.querySelector("#rating-button").querySelector("p").classList.add("oov")
@@ -362,15 +386,10 @@
         if(method == "rate"){
           const new_avg = ((Number(data[category][view[ptr]]["r"]) * Number(data[category][view[ptr]]["n"])) + (Number(slider.value) / 2)) / (Number(data[category][view[ptr]]["n"]) + 1)
           Object.assign(data[category][view[ptr]], {rating : new_avg})
-          localStorage.setItem(get_date(ptr), JSON.stringify(data[category][view[ptr]]))
           document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(new_avg * 100) / 100
           document.querySelector("#interaction").classList.add("oov")
           document.querySelector("#interaction").style.visibility = "hidden"
           document.querySelector(".right-arrow").classList.add(":hover")
-          setTimeout(() => {
-            shift("+")
-            document.querySelector(".right-arrow").classList.remove(":hover")
-          }, 2000);
         }
 
         const response = await fetch(target_url)
@@ -388,17 +407,20 @@
         result = JSON.parse(result)
         
         if(method == "rate"){
-          const temp_ptr = ptr - 1
-          if(temp_ptr >= view.length){
-            temp_ptr = 0
-          }
-          if(temp_ptr < 0){
-            temp_ptr = view.length - 1
+          data[category][view[ptr]] = result
+          if(category == "daily"){
+            localStorage.setItem(get_date(category, ptr), JSON.stringify(data[category][view[ptr]]))
+          } else {
+            localStorage.setItem(get_item(category, ptr), JSON.stringify(data[category][view[ptr]]))
           }
 
-          data[category][view[temp_ptr]] = result
+          shift("+")
+          document.querySelector(".right-arrow").classList.remove(":hover")
         } else {
           data = result
+
+          shift("+")
+          document.querySelector(".right-arrow").classList.remove(":hover")
         }
 
         setTimeout(()=>{
@@ -410,11 +432,11 @@
         }, 0)
 
         if(method == "face"){
-          if(localStorage.getItem(get_date(ptr))){
+          if(localStorage.getItem(get_date(category, ptr)) || localStorage.getItem(get_item(category, ptr))){
             document.querySelector("#title").innerHTML = "Average Rating: " + Math.round(data[category][view[ptr]]["r"] * 100) / 100
           }
 
-          document.querySelector("img").src = data[category][view[ptr]]["i"]
+          document.querySelector("#pic").src = data[category][view[ptr]]["i"]
         }
       }
 
@@ -506,6 +528,15 @@
         return
       }
 
+      function set_category(c){
+        category = c
+        ptr = 0
+        localStorage.setItem("category", c)
+        image_filter()
+        shift('+')
+        shift('-')
+      }
+
       do_rating_stuff("face").then(()=>{
         document.querySelector("#position").innerHTML = (ptr + 1).toString() + "/" + data[category].length
         if(localStorage.getItem("filters")){
@@ -516,6 +547,13 @@
             filter_inputs[i].checked = temp_filters[i][0]
           }
         }
+
+        if(localStorage.getItem("category")){
+          category = localStorage.getItem("category")
+        } else {
+          category = "daily"
+        }
+
         image_filter()
       })
 

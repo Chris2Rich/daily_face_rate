@@ -6,11 +6,19 @@
       "use": "@vercel/node"
     },
     {
+      "src": "/api/account_service.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "sitemap.xml",
       "use": "@vercel/static"
     },
     {
       "src": "robots.txt",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "account.html",
       "use": "@vercel/static"
     },
     {
@@ -20,8 +28,12 @@
   ],
   "routes": [
     {
-      "src": "/api.*",
+      "src": "/api/face_service.*",
       "dest": "/api/face_service.js"
+    },
+    {
+      "src": "/api/account_service.js.*",
+      "dest": "/api/account_service.js"
     },
     {
       "src": "/sitemap.xml",
@@ -30,6 +42,10 @@
     {
       "src": "/robots.txt",
       "dest": "robots.txt"
+    },
+    {
+      "src": "/account",
+      "dest": "account.html"
     },
     {
       "src": "/.*",

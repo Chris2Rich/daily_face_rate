@@ -32,7 +32,7 @@
       "dest": "/api/face_service.js"
     },
     {
-      "src": "/api/account_service.js.*",
+      "src": "/api/account_service.*",
       "dest": "/api/account_service.js"
     },
     {

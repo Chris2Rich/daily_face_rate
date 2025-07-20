@@ -1,6 +1,5 @@
 const axios = require('axios');
 
-const day = 8
 let db_data = null
 let daily_data = null
 
@@ -42,15 +41,25 @@ async function get_data(){
       "collection": "data",
       "database": "data",
       "dataSource": "raterandoms",
-      "pipeline": [{
-        $project: {
-          nthObject: { $arrayElemAt: ["$daily", day] }
+      "pipeline": [
+        {
+          $project: {
+            combinedDaily: {
+              $concatArrays: [
+                [ { $arrayElemAt: ["$daily", 3] } ],
+                [ { $arrayElemAt: ["$daily", 4] } ],
+                [ { $arrayElemAt: ["$daily", 5] } ],
+                [ { $arrayElemAt: ["$daily", 6] } ]
+              ]
+            }
+          }
         }
-      }]
+      ]
     }
   })
 
-  daily_data = r2.data.documents[0].nthObject
+  let a = r2.data.documents[0].combinedDaily
+  daily_data = [].concat(a[0], a[1], a[2], a[3])
   Object.assign(db_data, {"daily" : daily_data})
   return
 }
